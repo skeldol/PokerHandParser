@@ -91,20 +91,17 @@ public class PokerStarsParser  extends PokerHandHistoryParser {
 		
 
 		if(currentLine.contains("posts the ante")) {
-			String playerName = extractStringData(0,":");
-			Player player = getPlayerByName(playerName);
+			Player player = getPlayerByName(extractStringData(0,":"));
 			int ante = extractIntData("posts the ante ");
 			player.setAnte(new BigDecimal(ante));
 		}
 		if(currentLine.contains("posts small blind")) {
-			String playerName = extractStringData(0,":");
-			Player player = getPlayerByName(playerName);
+			Player player = getPlayerByName(extractStringData(0,":"));
 			int smallBlind = extractIntData("posts small blind ");
 			hand.addAction(new SmallBlind(player, new BigDecimal(smallBlind)));
 		}		
 		if(currentLine.contains("posts big blind")) {
-			String playerName = extractStringData(0,":");
-			Player player = getPlayerByName(playerName);
+			Player player = getPlayerByName(extractStringData(0,":"));
 			int bigBlind = extractIntData("posts big blind ");
 			hand.addAction(new BigBlind(player, new BigDecimal(bigBlind)));
 		}			
@@ -114,40 +111,30 @@ public class PokerStarsParser  extends PokerHandHistoryParser {
 	
 	protected void parsePlay() {
 		if(currentLine.contains("raises")) {
-			String playerName = extractStringData(0,":");
-			Player player = getPlayerByName(playerName);
+			Player player = getPlayerByName(extractStringData(0,":"));
 			String raises = extractStringData(" to ");
 			raises = removeStringData(raises, " and is all-in");
 			int value = Integer.valueOf(raises);
 			hand.addAction(new Raise(player, new BigDecimal(value)));
-		}		
-		
-		if(currentLine.contains("folds")) {
-			String playerName = extractStringData(0,":");
-			Player player = getPlayerByName(playerName);
+			
+		}	else if(currentLine.contains("folds")) {
+			Player player = getPlayerByName(extractStringData(0,":"));
 			hand.addAction(new Fold(player));
-		}	
-		
-		if(currentLine.contains("checks")) {
-			String playerName = extractStringData(0,":");
-			Player player = getPlayerByName(playerName);
+			
+		}	else if(currentLine.contains("checks")) {
+			Player player = getPlayerByName(extractStringData(0,":"));
 			hand.addAction(new Check(player));
-		}	
-		
-		if(currentLine.contains("calls")) {
-			String playerName = extractStringData(0,":");
-			Player player = getPlayerByName(playerName);
+			
+		}	else if(currentLine.contains("calls")) {
+			Player player = getPlayerByName(extractStringData(0,":"));
 			hand.addAction(new Call(player));
-		}	
-		
-		if(currentLine.contains("bets ")) {
-			String playerName = extractStringData(0,":");
-			Player player = getPlayerByName(playerName);
+			
+		}	else if(currentLine.contains("bets ")) {
+			Player player = getPlayerByName(extractStringData(0,":"));
 			int value = extractIntData("bets ");
 			hand.addAction(new Bet(player, new BigDecimal(value)));
-		}	
-		
-		if(currentLine.contains("Dealt to")) {
+			
+		} else if(currentLine.contains("Dealt to")) {
 			String playerName = extractStringData("Dealt to ",  " [");
 			String cards = extractStringData("[","]");
 			String[] tokens = cards.split(" ");
@@ -156,8 +143,7 @@ public class PokerStarsParser  extends PokerHandHistoryParser {
 			player.setHoleCard1(Card.parse(tokens[0]));
 			player.setHoleCard2(Card.parse(tokens[1]));
 
-		}
-		if(currentLine.contains("shows")) {
+		} else if(currentLine.contains("shows")) {
 			String playerName = extractStringData(0,":");
 			String cards = extractStringData("[","]");
 			String[] tokens = cards.split(" ");
@@ -166,40 +152,33 @@ public class PokerStarsParser  extends PokerHandHistoryParser {
 			player.setHoleCard1(Card.parse(tokens[0]));
 			player.setHoleCard2(Card.parse(tokens[1]));
 
-		}		
-
-		if(currentLine.contains("collected")) {
+		} else if(currentLine.contains("collected")) {
 			String playerName = extractStringData(0," ");
 			Player player = getPlayerByName(playerName);
 			player.setWinner(true);
-		}	
-		
-		if(currentLine.contains("*** FLOP ***")) {
+			
+		} else if(currentLine.contains("*** FLOP ***")) {
 			String cards = extractStringData("[","]");
 			String[] tokens = cards.split(" ");
 			Card card1 =Card.parse(tokens[0]);
 			Card card2 =Card.parse(tokens[1]);
 			Card card3 =Card.parse(tokens[2]);			
 			hand.setFlop(new Flop(card1, card2, card3));
-			return;
-		}	
-
-		if(currentLine.contains("*** TURN ***")) {
+		
+			
+		} else if(currentLine.contains("*** TURN ***")) {
 			String card = extractStringData("] [","]");
 			hand.setTurn(new Turn(Card.parse(card)));
-			return;
-		}
 		
-		if(currentLine.contains("*** RIVER ***")) {
+		} else if(currentLine.contains("*** RIVER ***")) {
 			String card = extractStringData("] [","]");
 			hand.setRiver(new River(Card.parse(card)));
-			return;
-		}	
 		
-		if(currentLine.contains("*** SUMMARY ***")) {
+		} else if(currentLine.contains("*** SUMMARY ***")) {
 			state = ParserState.COMPLETE;
-			return;
 		}		
+		
+		return;
 	}
 	
 	
