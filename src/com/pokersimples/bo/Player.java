@@ -1,16 +1,40 @@
 package com.pokersimples.bo;
 
 import java.math.BigDecimal;
+import java.util.Iterator;
+import java.util.List;
 
 public class Player {
+
+	private Hand hand;
 	private String playerName;
 	private int seatNumber;
 	private boolean isDealer;
-	private BigDecimal chips;
+	private BigDecimal startingChips;
 	private BigDecimal ante;	
 	private Card holeCard1;
 	private Card holeCard2;
 	private boolean winner;
+	
+	/*
+	 * Returns the chip count for this player for the action number
+	 */
+	public BigDecimal getChipCountAt(int pActionNumber) {
+		BigDecimal chipCount = startingChips;
+		
+		for(int i = 0; i < pActionNumber; i++) {
+			Action action = hand.getAction(i);
+			
+			if(action instanceof PlayerAction) {
+				PlayerAction playerAction = (PlayerAction)action;
+				if(playerAction.getPlayer() == this) {
+					chipCount.add(playerAction.getAmount());
+				}
+			}
+		}
+		
+		return chipCount;
+	}
 	
 	public boolean isWinner() {
 		return winner;
@@ -36,11 +60,11 @@ public class Player {
 	public void setDealer(boolean isDealer) {
 		this.isDealer = isDealer;
 	}
-	public BigDecimal getChips() {
-		return chips;
+	public BigDecimal getStartingChips() {
+		return startingChips;
 	}
-	public void setChips(BigDecimal chips) {
-		this.chips = chips;
+	public void setStartingChips(BigDecimal chips) {
+		this.startingChips = chips;
 	}
 
 	public BigDecimal getAnte() {
@@ -60,6 +84,10 @@ public class Player {
 	}
 	public void setHoleCard2(Card holeCard2) {
 		this.holeCard2 = holeCard2;
+	}
+	
+	void setHand(Hand hand) {
+		this.hand = hand;
 	}
 	
 }

@@ -1,0 +1,43 @@
+Transcript for last 1 week of play requested by skeldol (skeldol@hotmail.com)
+
+*********** # 1 **************
+PokerStars Hand #209574628904: Tournament #2814443259, $1.29+$0.21 USD Hold'em No Limit - Level III (25/50) - 2020/02/26 20:46:22 WET [2020/02/26 15:46:22 ET]
+Table '2814443259 1' 6-max Seat #4 is the button
+Seat 1: Creeker60 (2982 in chips)
+Seat 2: skeldol (972 in chips)
+Seat 3: NagsarInaste (2255 in chips)
+Seat 4: Mikos108 (1171 in chips)
+Seat 5: nycflasher (1620 in chips)
+Creeker60: posts the ante 6
+skeldol: posts the ante 6
+NagsarInaste: posts the ante 6
+Mikos108: posts the ante 6
+nycflasher: posts the ante 6
+nycflasher: posts small blind 25
+Creeker60: posts big blind 50
+*** HOLE CARDS ***
+Dealt to skeldol [Ad Kh]
+skeldol: raises 100 to 150
+NagsarInaste: raises 100 to 250
+Mikos108: folds
+nycflasher: folds
+Creeker60: folds
+skeldol: raises 716 to 966 and is all-in
+NagsarInaste: calls 716
+*** FLOP *** [Qc 9d 4s]
+*** TURN *** [Qc 9d 4s] [2c]
+*** RIVER *** [Qc 9d 4s 2c] [Ts]
+*** SHOW DOWN ***
+skeldol: shows [Ad Kh] (high card Ace)
+NagsarInaste: shows [Th Tc] (three of a kind, Tens)
+NagsarInaste collected 2037 from pot
+skeldol finished the tournament in 5th place
+*** SUMMARY ***
+Total pot 2037 | Rake 0
+Board [Qc 9d 4s 2c Ts]
+Seat 1: Creeker60 (big blind) folded before Flop
+Seat 2: skeldol showed [Ad Kh] and lost with high card Ace
+Seat 3: NagsarInaste showed [Th Tc] and won (2037) with three of a kind, Tens
+Seat 4: Mikos108 (button) folded before Flop (didn't bet)
+Seat 5: nycflasher (small blind) folded before Flop
+

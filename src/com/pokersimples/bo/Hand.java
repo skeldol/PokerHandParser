@@ -1,6 +1,5 @@
 package com.pokersimples.bo;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -12,28 +11,22 @@ public class Hand {
 	private long handId;
 	
 	private Map<Integer, Player> players = new Hashtable<Integer, Player>();
-	
-	private PreFlop preFlop;
-	private Flop flop;
-	private Turn turn;
-	private River river;
+	private List<Action> actions =  new ArrayList<Action>();
+
+	public Action getAction(int pSeq) {
+		return actions.get(pSeq);
+	}
 	
 	public void addAction(Action pAction) {
-		if(river != null) {
-			river.addAction(pAction);
-		} else if(turn != null) {
-			turn.addAction(pAction);	
-		} else if(flop != null) {
-			flop.addAction(pAction);
-		} else if(preFlop != null) {
-			preFlop.addAction(pAction);
-		} else {
-			throw new RuntimeException("No Round available for action." + pAction);
-		}
+		actions.add(pAction);
+	}
+	
+	public Player getPlayer(int pSeatNumber) {
+		return players.get(pSeatNumber);
 	}
 	
 	public void addPlayer(Player pPlayer, int pSeatNumber) {
-
+		pPlayer.setHand(this);
 		players.put(pSeatNumber , pPlayer);
 	}
 	
@@ -50,30 +43,7 @@ public class Hand {
 		this.handId = mHandId;
 	}
 
-	public PreFlop getPreFlop() {
-		return preFlop;
-	}
-	public void setPreFlop(PreFlop preFlop) {
-		this.preFlop = preFlop;
-	}
-	public Flop getFlop() {
-		return flop;
-	}
-	public void setFlop(Flop flop) {
-		this.flop = flop;
-	}
-	public Turn getTurn() {
-		return turn;
-	}
-	public void setTurn(Turn turn) {
-		this.turn = turn;
-	}
-	public River getRiver() {
-		return river;
-	}
-	public void setRiver(River river) {
-		this.river = river;
-	}
+
 
 	
 }

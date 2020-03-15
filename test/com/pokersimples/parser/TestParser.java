@@ -13,7 +13,8 @@ import com.pokersimples.parser.pokerstars.PokerStarsParser;
 public class TestParser {
 	
 	public static void main(String[] args) {
-		File file = new File("C:\\docs\\POKER\\poker hands.txt"); 
+		System.out.println(System.getProperty("user.dir"));
+		File file = new File(".\\src\\SinglePokerHand.txt"); 
 	  
 		List<Hand> games = new ArrayList<Hand>();
 		

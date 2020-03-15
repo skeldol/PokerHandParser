@@ -52,7 +52,6 @@ public class PokerStarsParser  extends PokerHandHistoryParser {
 			if(currentLine.contains("PokerStars")) {
 				state = ParserState.HEAD;
 				hand = new Hand();
-				hand.setPreFlop(new PreFlop());
 				
 				// Get the hand number
 				hand.setmHandId(extractLongData("Hand #", ":"));
@@ -74,7 +73,7 @@ public class PokerStarsParser  extends PokerHandHistoryParser {
 			int chips = extractIntData(" (", " in chips)");
 			Player player = new Player();
 			player.setPlayerName(playerName);
-			player.setChips(new BigDecimal(chips));
+			player.setStartingChips(new BigDecimal(chips));
 			player.setSeatNumber(seatNumber);
 			hand.addPlayer(player  , seatNumber);
 			playerSeatMap.put(playerName, player);
@@ -163,16 +162,16 @@ public class PokerStarsParser  extends PokerHandHistoryParser {
 			Card card1 =Card.parse(tokens[0]);
 			Card card2 =Card.parse(tokens[1]);
 			Card card3 =Card.parse(tokens[2]);			
-			hand.setFlop(new Flop(card1, card2, card3));
+			hand.addAction(new Flop(card1, card2, card3));
 		
 			
 		} else if(currentLine.contains("*** TURN ***")) {
 			String card = extractStringData("] [","]");
-			hand.setTurn(new Turn(Card.parse(card)));
+			hand.addAction(new Turn(Card.parse(card)));
 		
 		} else if(currentLine.contains("*** RIVER ***")) {
 			String card = extractStringData("] [","]");
-			hand.setRiver(new River(Card.parse(card)));
+			hand.addAction(new River(Card.parse(card)));
 		
 		} else if(currentLine.contains("*** SUMMARY ***")) {
 			state = ParserState.COMPLETE;
