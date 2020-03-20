@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.learn.PokerSimulator.utils.Logger;
+import com.pokersimples.bo.Ante;
 import com.pokersimples.bo.Bet;
 import com.pokersimples.bo.BigBlind;
 import com.pokersimples.bo.Call;
@@ -80,7 +81,7 @@ public class PokerStarsParser  extends PokerHandHistoryParser {
 			if(seatNumber == buttonSeat) {
 				player.setDealer(true);
 			}
-			return;
+						return;
 		}
 		
 		if(currentLine.contains("*** HOLE CARDS ***")) {
@@ -91,8 +92,10 @@ public class PokerStarsParser  extends PokerHandHistoryParser {
 
 		if(currentLine.contains("posts the ante")) {
 			Player player = getPlayerByName(extractStringData(0,":"));
-			int ante = extractIntData("posts the ante ");
-			player.setAnte(new BigDecimal(ante));
+			BigDecimal ante = new BigDecimal(extractIntData("posts the ante "));
+			
+			hand.addAction(new Ante(player, ante));
+			player.setAnte(ante);
 		}
 		if(currentLine.contains("posts small blind")) {
 			Player player = getPlayerByName(extractStringData(0,":"));
