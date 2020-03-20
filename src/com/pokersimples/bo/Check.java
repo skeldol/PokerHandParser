@@ -8,5 +8,12 @@ public class Check extends PlayerAction {
 		super(pPlayer);
 		
 	}
-
+	@Override
+	public String getActionName() {
+		return "Check";
+	}
+	
+	public BigDecimal getBetSize() {
+		return getAmount();
+	}
 }

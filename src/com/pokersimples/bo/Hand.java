@@ -18,6 +18,14 @@ public class Hand {
 	}
 	
 	public void addAction(Action pAction) {
+		pAction.setSeq(actions.size());
+		Action previousAction = null;
+		if(actions != null && actions.size() != 0) {
+			previousAction = actions.get(actions.size() - 1);
+		} else {
+			previousAction = null;
+		}
+		pAction.setPreviousAction(previousAction);
 		actions.add(pAction);
 	}
 	

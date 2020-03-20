@@ -9,4 +9,12 @@ public class SmallBlind extends PlayerAction {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public String getActionName() {
+		return "Small Blind " + getAmount();
+	}
+	
+	public BigDecimal getBetSize() {
+		return getAmount();
+	}
 }

@@ -16,25 +16,6 @@ public class Player {
 	private Card holeCard2;
 	private boolean winner;
 	
-	/*
-	 * Returns the chip count for this player for the action number
-	 */
-	public BigDecimal getChipCountAt(int pActionNumber) {
-		BigDecimal chipCount = startingChips;
-		
-		for(int i = 0; i < pActionNumber; i++) {
-			Action action = hand.getAction(i);
-			
-			if(action instanceof PlayerAction) {
-				PlayerAction playerAction = (PlayerAction)action;
-				if(playerAction.getPlayer() == this) {
-					chipCount.add(playerAction.getAmount());
-				}
-			}
-		}
-		
-		return chipCount;
-	}
 	
 	public boolean isWinner() {
 		return winner;
@@ -63,6 +44,15 @@ public class Player {
 	public BigDecimal getStartingChips() {
 		return startingChips;
 	}
+	
+	public BigDecimal getChipsAfterAnte() {
+		if(ante != null) {
+			return startingChips.subtract(ante);
+		} else {
+			return startingChips;
+		}
+	}
+	
 	public void setStartingChips(BigDecimal chips) {
 		this.startingChips = chips;
 	}

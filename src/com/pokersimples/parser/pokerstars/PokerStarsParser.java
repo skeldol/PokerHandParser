@@ -111,10 +111,10 @@ public class PokerStarsParser  extends PokerHandHistoryParser {
 	protected void parsePlay() {
 		if(currentLine.contains("raises")) {
 			Player player = getPlayerByName(extractStringData(0,":"));
-			String raises = extractStringData(" to ");
-			raises = removeStringData(raises, " and is all-in");
-			int value = Integer.valueOf(raises);
-			hand.addAction(new Raise(player, new BigDecimal(value)));
+			String raisesFrom = extractStringData("raises ", " to");
+			String raisesTo = extractStringData(" to ");
+			raisesTo = removeStringData(raisesTo, " and is all-in");
+			hand.addAction(new Raise(player, new BigDecimal(raisesFrom), new BigDecimal(raisesTo)));
 			
 		}	else if(currentLine.contains("folds")) {
 			Player player = getPlayerByName(extractStringData(0,":"));
@@ -126,7 +126,8 @@ public class PokerStarsParser  extends PokerHandHistoryParser {
 			
 		}	else if(currentLine.contains("calls")) {
 			Player player = getPlayerByName(extractStringData(0,":"));
-			hand.addAction(new Call(player));
+			int value = extractIntData("calls ");
+			hand.addAction(new Call(player, new BigDecimal(value)));
 			
 		}	else if(currentLine.contains("bets ")) {
 			Player player = getPlayerByName(extractStringData(0,":"));

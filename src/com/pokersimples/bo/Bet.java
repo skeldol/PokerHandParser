@@ -6,6 +6,14 @@ public class Bet extends PlayerAction {
 
 	public Bet(Player pPlayer, BigDecimal pAmount) {
 		super(pPlayer, pAmount);
-		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public String getActionName() {
+		return "Bet " + getAmount();
+	}
+	
+	public BigDecimal getBetSize() {
+		return getAmount();
 	}
 }

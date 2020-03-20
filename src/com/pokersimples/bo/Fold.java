@@ -8,5 +8,12 @@ public class Fold extends PlayerAction {
 		super(pPlayer);
 		
 	}
-
+	@Override
+	public String getActionName() {
+		return "Fold";
+	}
+	
+	public BigDecimal getBetSize() {
+		return getAmount();
+	}
 }
