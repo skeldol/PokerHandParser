@@ -95,7 +95,6 @@ public class PokerStarsParser  extends PokerHandHistoryParser {
 			BigDecimal ante = new BigDecimal(extractIntData("posts the ante "));
 			
 			hand.addAction(new Ante(player, ante));
-			player.setAnte(ante);
 		}
 		if(currentLine.contains("posts small blind")) {
 			Player player = getPlayerByName(extractStringData(0,":"));

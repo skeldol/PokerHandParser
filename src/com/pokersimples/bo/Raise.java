@@ -25,7 +25,7 @@ public class Raise extends PlayerAction {
 	 * to the last bet, raise or big blind.
 	 */
 	public BigDecimal getBetSize() {
-		BigDecimal lastBet = lastBet();
+		BigDecimal lastBet = playersLastBet();
 		if(lastBet == null) {
 			lastBet = new BigDecimal(0);
 		}

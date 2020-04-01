@@ -11,7 +11,6 @@ public class Player {
 	private int seatNumber;
 	private boolean isDealer;
 	private BigDecimal startingChips;
-	private BigDecimal ante;	
 	private Card holeCard1;
 	private Card holeCard2;
 	private boolean winner;
@@ -45,24 +44,11 @@ public class Player {
 		return startingChips;
 	}
 	
-	public BigDecimal getChipsAfterAnte() {
-		if(ante != null) {
-			return startingChips.subtract(ante);
-		} else {
-			return startingChips;
-		}
-	}
 	
 	public void setStartingChips(BigDecimal chips) {
 		this.startingChips = chips;
 	}
 
-	public BigDecimal getAnte() {
-		return ante;
-	}
-	public void setAnte(BigDecimal ante) {
-		this.ante = ante;
-	}
 	public Card getHoleCard1() {
 		return holeCard1;
 	}

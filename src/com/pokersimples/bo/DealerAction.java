@@ -21,4 +21,5 @@ public class DealerAction extends Action {
 		return getPreviousAction().getPot();
 		
 	}
+	
 }
