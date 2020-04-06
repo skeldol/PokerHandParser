@@ -1,20 +1,28 @@
 package com.pokersimples.bo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class Hand {
+public class Hand implements Serializable {
 	private String mTableName;
 	
-	private long handId;
+	private String handId;
 	
 	private Map<Integer, Player> players = new Hashtable<Integer, Player>();
 	private List<Action> actions =  new ArrayList<Action>();
 
 	public Action getAction(int pSeq) {
 		return actions.get(pSeq);
+	}
+	
+	// Returns the final action in the hand
+	public Action getLastAction() {
+		return actions.get(actions.size() - 1 );
+
 	}
 	
 	public void addAction(Action pAction) {
@@ -44,14 +52,23 @@ public class Hand {
 	public void setmTableName(String mTableName) {
 		this.mTableName = mTableName;
 	}
-	public long getmHandId() {
+	public String getHandId() {
 		return handId;
 	}
-	public void setmHandId(long mHandId) {
-		this.handId = mHandId;
+	public void setHandId(String pHandId) {
+		this.handId = pHandId;
+	}
+	
+	public Player getHero() {
+		Iterator<Player> iter = players.values().iterator();
+		while(iter.hasNext()) {
+			Player player = iter.next();
+			if(player.isHero()) {
+				return player;
+			}
+		}
+		
+		return null;
 	}
 
-
-
-	
 }

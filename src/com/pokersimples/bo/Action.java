@@ -1,8 +1,9 @@
 package com.pokersimples.bo;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public abstract class Action {
+public abstract class Action implements Serializable {
 	private int seq;
 	private Action previousAction;
 

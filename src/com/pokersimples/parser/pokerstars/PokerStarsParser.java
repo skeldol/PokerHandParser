@@ -55,7 +55,7 @@ public class PokerStarsParser  extends PokerHandHistoryParser {
 				hand = new Hand();
 				
 				// Get the hand number
-				hand.setmHandId(extractLongData("Hand #", ":"));
+				hand.setHandId(extractStringData("Hand #", ":"));
 				
 				return;
 			} else {
@@ -74,6 +74,7 @@ public class PokerStarsParser  extends PokerHandHistoryParser {
 			int chips = extractIntData(" (", " in chips)");
 			Player player = new Player();
 			player.setPlayerName(playerName);
+		
 			player.setStartingChips(new BigDecimal(chips));
 			player.setSeatNumber(seatNumber);
 			hand.addPlayer(player  , seatNumber);
@@ -157,7 +158,8 @@ public class PokerStarsParser  extends PokerHandHistoryParser {
 		} else if(currentLine.contains("collected")) {
 			String playerName = extractStringData(0," ");
 			Player player = getPlayerByName(playerName);
-			player.setWinner(true);
+			String collected = extractStringData("collected "," from");
+			player.setWinnings(new BigDecimal(collected));
 			
 		} else if(currentLine.contains("*** FLOP ***")) {
 			String cards = extractStringData("[","]");

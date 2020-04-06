@@ -46,28 +46,19 @@ public abstract class PlayerAction extends Action{
 			return ((PlayerAction)getPreviousAction()).getAmount();
 	}
 	
-	public BigDecimal callAmount() {
+	
+	// Returns the last action played by this player
+	public PlayerAction previousPlayerAction() {
 		Action action = this;
-		BigDecimal lastBet = null;
-
 		while(action.getPreviousAction() != null) {
 			action = action.getPreviousAction();
-			// First check if we found a betting action
-			if(action instanceof BigBlind || action instanceof Bet || action instanceof Raise || action instanceof Call) {
-				lastBet = (BigDecimal)((PlayerAction)action).getBetSize();
-				break;
-
-				
-			// We found the start of the round first so return null
-			} else if(action instanceof Flop || action instanceof Turn || action instanceof River) {
-				lastBet = null;
-				break;
+			if(action instanceof PlayerAction && ((PlayerAction)action).getPlayer() == getPlayer()) {
+				return (PlayerAction) action;
 			}
+	
 		}
 		
-		Logger.debug("Call size is " + lastBet);
-		return lastBet;
-
+		return null;
 	}
 	
 	/*
@@ -80,7 +71,8 @@ public abstract class PlayerAction extends Action{
 		while(action.getPreviousAction() != null) {
 			action = action.getPreviousAction();
 			// First check if we found a betting action
-			if(action instanceof BigBlind || action instanceof Bet || action instanceof Raise || action instanceof Call) {
+			if(action instanceof SmallBlind || action instanceof BigBlind || action instanceof Bet || action instanceof Raise || 
+					action instanceof Call) {
 				PlayerAction lastAction = (PlayerAction)action;
 				// If we found a betting action and it was for the current player return it.
 				if(lastAction.getPlayer() == getPlayer()) {
@@ -107,28 +99,79 @@ public abstract class PlayerAction extends Action{
 		 //The size of the pot is equal to the previous pot size plus this persons bet
 		 //If the person has raised then need to understand what their raise increment is from their
 		 //last bet.
-		BigDecimal lastPot = new BigDecimal(0);
-		if(getPreviousAction() != null) {
-			lastPot = getPreviousAction().getPot();
-		}
-		
+		BigDecimal lastPot = getPotBeforeThisAction();
 		
 		return lastPot.add(getBetSize());
 	}
 	
 	
 	/*
-	 * Total value of pot / The call size
+	 * Returns the last active bet, basically ignores any Fold
+	 * If a dealer action is reached before an active bet returns 0
+	 */
+	public BigDecimal activeBet() {
+		Action action = this;
+		BigDecimal activeBet = null;
+	
+		while(action.getPreviousAction() != null) {
+			action = action.getPreviousAction();
+			// First check if we found a betting action
+			if(action instanceof SmallBlind || action instanceof BigBlind || action instanceof Bet || action instanceof Raise || 
+						action instanceof Call) {
+				if(action instanceof Raise) {
+					activeBet = (BigDecimal)((Raise)action).getRaiesTo();
+				} else {
+					activeBet = (BigDecimal)((PlayerAction)action).getBetSize();
+				}
+
+				break;
+
+			// If  found the start of the round first so return null
+			} else if(action instanceof Flop || action instanceof Turn || action instanceof River) {
+				activeBet = null;
+				break;
+			}
+			
+		}
+		
+		Logger.debug("activeBet  is " + activeBet);
+		return activeBet;
+	}  
+	
+	
+	// returns the pot size at the end of last action
+	private BigDecimal getPotBeforeThisAction() {
+		BigDecimal lastPot = new BigDecimal(0);
+		if(getPreviousAction() != null) {
+			lastPot = getPreviousAction().getPot();
+		}
+		return lastPot;
+	}
+	
+	
+	/*
+	 * The pot odds being offered when this action is happening
 	 */
 	public BigDecimal getPotOdds() {
-		BigDecimal call = callAmount();
+		BigDecimal betSize = activeBet();
+		BigDecimal playersLastBet = playersLastBet();
+		
+		if(betSize == null) {
+			betSize = BigDecimal.ZERO;
+		}
+		
+		if(playersLastBet == null) {
+			playersLastBet = BigDecimal.ZERO;
+		}
+		
+		BigDecimal callSize = betSize.subtract(playersLastBet);
 		
 		// https://stackoverflow.com/questions/10950914/how-to-check-if-bigdecimal-variable-0-in-java
-		if(call == null || call.compareTo(BigDecimal.ZERO) == 0) {
+		if(betSize == null || betSize.compareTo(BigDecimal.ZERO) == 0) {
 			return new BigDecimal(0);
 		} else {
 			//https://stackoverflow.com/questions/4591206/arithmeticexception-non-terminating-decimal-expansion-no-exact-representable
-			return getPot().divide(call, 2, RoundingMode.HALF_UP);	
+			return getPotBeforeThisAction().divide(callSize, 1, RoundingMode.HALF_UP);	
 		}
 
 	}

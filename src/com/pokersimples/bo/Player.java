@@ -1,10 +1,11 @@
 package com.pokersimples.bo;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.List;
 
-public class Player {
+public class Player implements Serializable {
 
 	private Hand hand;
 	private String playerName;
@@ -13,15 +14,20 @@ public class Player {
 	private BigDecimal startingChips;
 	private Card holeCard1;
 	private Card holeCard2;
-	private boolean winner;
-	
-	
-	public boolean isWinner() {
-		return winner;
+	private BigDecimal winnings = new BigDecimal(0);   // Default didn't win anything
+
+	public BigDecimal getWinnings() {
+		return winnings;
 	}
-	public void setWinner(boolean winner) {
-		this.winner = winner;
+
+	public void setWinnings(BigDecimal winnings) {
+		this.winnings = winnings;
 	}
+
+	public boolean isHero() {
+		return playerName.equals("skeldol") ? true : false;
+	}
+	
 	public String getPlayerName() {
 		return playerName;
 	}
@@ -64,6 +70,30 @@ public class Player {
 	
 	void setHand(Hand hand) {
 		this.hand = hand;
+	}
+	
+	/*
+	 * Winnings - chips put in pot
+	 */
+	public BigDecimal netWinnings() {
+		BigDecimal finalChipCount = playersLastAction().getChipCount();
+		BigDecimal chipsPutInPot = startingChips.subtract(finalChipCount);
+		return winnings.subtract(chipsPutInPot);
+	}
+	
+	// Return the last action in the hand by this player (i.e. a Fold or a showdown)
+	private PlayerAction playersLastAction() {
+		Action action = hand.getLastAction();
+		while(action.getPreviousAction() != null) {
+			action = action.getPreviousAction();
+			if(action instanceof PlayerAction && ((PlayerAction)action).getPlayer() == this) {
+				return (PlayerAction) action;
+			}
+	
+		}
+		
+		return null;
+		
 	}
 	
 }

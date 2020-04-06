@@ -56,7 +56,7 @@ public abstract class PokerHandHistoryParser {
 			return currentLine.substring(start + pStartToken.length(), finish);
 		} catch(Exception e1) {
 			if(hand != null) {
-				System.out.println("Parsing error for hand " + hand.getmHandId());
+				System.out.println("Parsing error for hand " + hand.getHandId());
 				System.out.println("Attempting to parse from " + pStartToken + " to " + pEndToken);
 				System.out.println(currentLine);
 
@@ -75,7 +75,7 @@ public abstract class PokerHandHistoryParser {
 			
 		} catch(Exception e1) {
 			if(hand != null) {
-				System.out.println("Parsing error for hand " + hand.getmHandId());
+				System.out.println("Parsing error for hand " + hand.getHandId());
 				System.out.println("Attempting to parse from " + pStartIndex + " to " + pEndToken);
 				System.out.println(currentLine);
 
@@ -93,7 +93,7 @@ public abstract class PokerHandHistoryParser {
 			return currentLine.substring(start + pFromToken.length());
 		} catch(Exception e1) {
 			if(hand != null) {
-				System.out.println("Parsing error for hand " + hand.getmHandId());
+				System.out.println("Parsing error for hand " + hand.getHandId());
 				System.out.println("Attempting to parse from " + pFromToken + " to end");
 				System.out.println(currentLine);
 

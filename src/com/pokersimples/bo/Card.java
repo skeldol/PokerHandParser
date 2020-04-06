@@ -1,7 +1,9 @@
 package com.pokersimples.bo;
 
-public class Card {
-	public static final int count = 52;
+import java.io.Serializable;
+
+public class Card implements Serializable {
+	public static final int count = 53;
 	private static Card[] values = new Card[count];
 	public final Rank rank;
 	public final Suit suit;
@@ -83,7 +85,9 @@ public class Card {
 	 */
 	private static int ordinal(Rank rank, Suit suit) {
 		  	// spears: changed from rank.ordinal() + suit.ordinal() * 13
-			return rank.ordinal() * 4 + suit.ordinal();  
+			//return rank.ordinal() * 4 + suit.ordinal();  
+			// LS to match 2+2 evaluator
+			return suit.ordinal() + 1 + rank.ordinal() * 4;
 	}
 
   public static Card[] parseArray(String s) {
@@ -96,7 +100,14 @@ public class Card {
 	}
 
 
-
+  public Suit getSuit() {
+	  return suit;
+  }
+  
+  public Rank getRank() {
+	  return rank;
+  }
+  
 }
 
 
