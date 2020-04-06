@@ -1,4 +1,4 @@
-package com.pokersimples.parser.pokerstars;
+package com.pokersimples.parser.handhistory.pokerstars;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -22,8 +22,8 @@ import com.pokersimples.bo.Raise;
 import com.pokersimples.bo.River;
 import com.pokersimples.bo.SmallBlind;
 import com.pokersimples.bo.Turn;
-import com.pokersimples.parser.ParserState;
-import com.pokersimples.parser.PokerHandHistoryParser;
+import com.pokersimples.parser.handhistory.ParserState;
+import com.pokersimples.parser.handhistory.PokerHandHistoryParser;
 
 /*
  * Header

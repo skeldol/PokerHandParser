@@ -1,4 +1,4 @@
-package com.pokersimples.parser;
+package com.pokersimples.parser.handhistory;
 
 public enum ParserState {
 	  HEAD,

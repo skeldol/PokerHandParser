@@ -1,4 +1,4 @@
-package com.pokersimples.parser;
+package com.pokersimples.parser.handhistory;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,7 +13,7 @@ import com.pokersimples.bo.Card;
 import com.pokersimples.bo.Hand;
 import com.pokersimples.bo.Player;
 import com.pokersimples.bo.PlayerAction;
-import com.pokersimples.parser.pokerstars.PokerStarsParser;
+import com.pokersimples.parser.handhistory.pokerstars.PokerStarsParser;
 
 import junit.framework.TestCase;
 
